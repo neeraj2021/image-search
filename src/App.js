@@ -10,7 +10,7 @@ function App() {
         <Route exact path="/">
           <Redirect to="/image-search" />
         </Route>
-        <Route to="/image-search" component={Gallery} />
+        <Route exact path="/image-search" component={Gallery} />
         <Route exact path="/image-search/:id" component={Imagedetails} />
         <Route>Error</Route>
       </Switch>
