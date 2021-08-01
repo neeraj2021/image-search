@@ -1,25 +1,19 @@
 import "./gallery.css";
 import { getSearchImage } from "./api/Api";
 import { useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { useLocation } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import { getMoreImage } from "./api/Api";
 function Gallery() {
-  const [index, setIndex] = useState(0);
-  const [length, setlength] = useState();
-  const [temp, setTemp] = useState(0);
   const [term, setTerm] = useState();
   const [term1, setTerm1] = useState();
   const [loading, setLoading] = useState(false);
-  const imgData = [];
 
   const key = "UTe_8na_9zX7UPXkvsbB5pIZuYC1U2rHbpWqrNnsL4E";
-  const location = useLocation();
   const [data, setData] = useState();
   const [page, setPage] = useState(2);
   const [loadmore, SetLoadMore] = useState(false);
-  const { control, handleSubmit, formState } = useForm({
-    // defaultValues: { ...initialValues },
+  const { handleSubmit } = useForm({
     mode: "onChange",
   });
   const Load = async () => {
@@ -29,7 +23,7 @@ function Gallery() {
     const temp = response.photos.results;
     const temp1 = data;
     temp.map((tempdata) => {
-      temp1.push(tempdata);
+      return temp1.push(tempdata);
     });
     setData(temp1);
     SetLoadMore(false);
@@ -42,12 +36,11 @@ function Gallery() {
     localStorage.setItem("key", key);
 
     const init = async () => {
-      setIndex(0);
       setLoading(true);
       const [error, response] = await getSearchImage(key, term);
 
       setData(response.photos.results);
-      console.log(data);
+      // console.log(data);
 
       setLoading(false);
     };
@@ -56,6 +49,7 @@ function Gallery() {
 
   return (
     <div>
+      {/* Navbar Start */}
       <nav className="navbar navbar-expand-lg navbar-light nav-bar">
         <div className="container">
           <div className="collapse navbar-collapse" id="navbarButtonsExample">
@@ -74,6 +68,8 @@ function Gallery() {
           </div>
         </div>
       </nav>
+      {/* Navbar End  */}
+
       <div className="s130 d-flex justify-content-center h-100">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="inner-form">
@@ -82,8 +78,8 @@ function Gallery() {
                 id="search"
                 type="text"
                 placeholder="What type of image are you looking for?"
+                style={{ paddingLeft: "10px" }}
                 onChange={(e) => {
-                  console.log(e.target.value);
                   setTerm1(e.target.value);
                 }}
               />
@@ -115,14 +111,17 @@ function Gallery() {
                       {data.map((img) => {
                         const ID = img.id;
                         return (
-                          <div className="col-md-3 col-sm-4 col-xs-6 img-div justify-content-center">
-                            <a href={`${location.pathname}/${ID}`}>
+                          <div
+                            key={ID}
+                            className="col-md-3 col-sm-4 col-xs-6 img-div justify-content-center"
+                          >
+                            <Link to={`/${ID}`}>
                               <img
                                 className="img-responsive img-size"
                                 src={img.urls.regular}
                                 alt="loading..."
                               />
-                            </a>
+                            </Link>
                           </div>
                         );
                       })}
@@ -175,8 +174,7 @@ function Gallery() {
           <section className="mb-4">
             <a
               className="btn btn-link btn-floating btn-lg text-dark m-1"
-              href="https://www.linkedin.com/in/jayant-kanel-669398195/"
-              role="button"
+              href="https://www.linkedin.com/in/neeraj-kumar-/"
               data-mdb-ripple-color="dark"
               target="_blank"
             >

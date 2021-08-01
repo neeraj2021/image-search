@@ -1,11 +1,10 @@
 import "./imagedetails.css";
 import { useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 import { getSingleImage } from "./api/Api";
+
 function Imagedetails() {
   const [url, setUrl] = useState();
-  const [des, setDes] = useState("");
   const [loading, setLoading] = useState(false);
   const location = useLocation();
   const FindId = () => {
@@ -29,7 +28,6 @@ function Imagedetails() {
       );
       console.log(response);
       setUrl(response.urls.raw);
-      setDes(response.alt_description);
       setLoading(false);
     };
     init();
@@ -38,18 +36,11 @@ function Imagedetails() {
     return <div className="spinner-border text-primary spinner-position"></div>;
   }
   return (
-    <div>
-      <div className="how-section1">
-        <div className="row">
-          <div className="col-md-6 how-img">
-            <img src={url} class="img-fluid" alt="" />
-          </div>
-          <div className="col-md-6">
-            <h4>{des}</h4>
-          </div>
-        </div>
+    <>
+      <div className="box">
+        <img src={url} className="imgSize" alt="" />
       </div>
-    </div>
+    </>
   );
 }
 export default Imagedetails;
