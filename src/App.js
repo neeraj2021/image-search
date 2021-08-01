@@ -7,8 +7,9 @@ function App() {
   return (
     <>
       <Switch>
-        <Route exact path="/" component={Gallery} />
-        <Route exact path="/:id" component={Imagedetails} />
+        <Route exact path="/image-search" component={Gallery} />
+        <Route exact path="/image-search/:id" component={Imagedetails} />
+        <Route>Error</Route>
       </Switch>
     </>
   );
